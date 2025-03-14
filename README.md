@@ -25,7 +25,7 @@ PeopleManagement es un sistema para la gestión de personas, con arquitectura en
 ---
 
 ## **Requisitos**  
-* .NET Framework
+* .NET Framework 4.8
 * SQL Server (para persistencia de datos)
 * AutoMapper (para mapeo de objetos)
 * FluentValidation (para validaciones de datos)
