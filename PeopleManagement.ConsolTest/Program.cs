@@ -19,22 +19,27 @@ namespace PeopleManagement.ConsolTest {
             // Obtener la instancia de la clase inyectada (PersonService)
             var personService = serviceProvider.GetRequiredService<IPersonService>();
             var newPerson = new Person {
-                IdentityDocument = "CE384796",
-                FirstName = "Wendy",
-                LastName = "Lemus",
+                IdentityDocument = "80125015",
+                FirstName = "NICOLAS",
+                LastName = "BOHORQUEZ",
                 DateOfBirth = new DateTime(1990, 5, 15),
-                //Emails = new List<EmailPerson> {
-                //        new EmailPerson { Email = "w.xxsd@gmail.com",  Type="Personal"}},
-                //Addresses= new List<AddressPerson> {
-                //        new AddressPerson { Address = "Jalapa, Guatemala", Type="Home"}},
+                Emails = new List<EmailPerson> {
+                        new EmailPerson { Email = "w.xxsd@gmail.com",  Type="Personal"}},
+                Addresses = new List<AddressPerson> {
+                        new AddressPerson { Address = "Jalapa, Guatemala", Type="Home"}},
                 Phones = new List<PhonePerson> {
-                        new PhonePerson {  PhoneNumber = "123456789", Type = "Home" },
                         new PhonePerson { PhoneNumber = "987654321", Type = "Mobile" },
                         new PhonePerson { PhoneNumber = "987654321", Type = "Mobile" }
                     }
             };
-            personService.AddPerson(newPerson);
+          var resultAddPerson =  personService.AddPerson(newPerson);
 
+            if (resultAddPerson.IsSuccess) {
+                Console.WriteLine("Persona agregada correctamente");
+            } else {
+                Console.WriteLine($"Error: {resultAddPerson.Error}");
+            }
+            Console.ReadLine();
             // personService.AddPerson(newPerson);
 
         }

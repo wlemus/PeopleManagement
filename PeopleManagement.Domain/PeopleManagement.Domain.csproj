@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Result.cs" />
     <Compile Include="Entities\AddressPerson.cs" />
     <Compile Include="Entities\EmailPerson.cs" />
     <Compile Include="Entities\Person.cs" />

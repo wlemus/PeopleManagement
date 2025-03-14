@@ -9,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PeopleManagement.Infrastructure {
-    public class PeopleDBContext : DbContext {
-        public PeopleDBContext()
-            : base(ConfigurationManager.ConnectionStrings["PeopleDBConnection"].ConnectionString) {
+    public class PeopleDBContext : DbContext {   
+        public PeopleDBContext(string connectionString)
+        : base(connectionString) {
         }
 
         public DbSet<PersonEntity> Person { get; set; }

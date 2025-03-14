@@ -1,4 +1,5 @@
 ﻿using PeopleManagement.Domain;
+using PeopleManagement.Domain.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,6 @@ namespace PeopleManagement.Application.Services.Interfaces
 {
     public interface IPersonService
     {
-        bool  AddPerson(Person person);
-        Person GetPersonById(int id);       
+        Result<bool>  AddPerson(Person person);  
     }
 }

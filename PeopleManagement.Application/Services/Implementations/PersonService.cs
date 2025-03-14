@@ -1,6 +1,7 @@
 ﻿using PeopleManagement.Application.Services.Interfaces;
 using PeopleManagement.Application.Validators;
 using PeopleManagement.Domain;
+using PeopleManagement.Domain.Common;
 using PeopleManagement.Domain.Exceptions;
 using PeopleManagement.Domain.Interfaces;
 using System;
@@ -18,39 +19,32 @@ namespace PeopleManagement.Application
             _personRepository = personRepository;
         }
 
-        public bool AddPerson(Person person) {
+        public Result<bool> AddPerson(Person person) {
+            string errors = string.Empty;
             try {
+              
                 var validator = new PersonValidator();
                 var validationResult = validator.Validate(person);
                 if (!validationResult.IsValid) {
-                    Console.WriteLine("Errores de validación:");
-                    foreach (var error in validationResult.Errors) {
-                        Console.WriteLine($"- {error.ErrorMessage}");
-                    }
-                    return false;
+                    errors = string.Join(Environment.NewLine, validationResult.Errors.Select(error => $"- {error.ErrorMessage}"));
+                    return Result<bool>.Failure($"Errores de validación: {errors}");
                 }
 
                 _personRepository.AddPerson(person);
-                return true;
+                return Result<bool>.Success(true);
             } catch ( DuplicateIdentityException ex ) {
                 ///////////////////////////////////////////////////////I. VALIDACION DOCUMENTO ID DUPLICADO///////////////////////////////////////////////
-                if (ex.InnerException.InnerException.Message.Contains("IX_IdentityDocumentPerson"))             
-                    Console.WriteLine($"El documento de identidad '{person.IdentityDocument}' ya existe.");
+                if (ex.InnerException.InnerException.Message.Contains("IX_IdentityDocumentPerson"))
+                    errors=$"El documento de identidad '{person.IdentityDocument}' ya existe.";
                 else
-                    Console.WriteLine($"Existen datos duplicados en la persona que se requiere agregar.");
+                   errors=$"Existen datos duplicados en la persona que se requiere agregar.";
             }
             catch (Exception ex) {
-                Console.WriteLine($"Ha ocurrido un error agregando a la persona: {ex.Message}");
+                errors = $"Ha ocurrido un error agregando a la persona: {ex.Message}";
            
             }
-            return false;
+             return Result<bool>.Failure(errors);
         }
-
-
-        public Person GetPersonById(int id) {
-            throw new NotImplementedException();
-        }
-
        
     }
 }

@@ -8,9 +8,7 @@ namespace PeopleManagement.Domain.Interfaces
 {
     public interface IPersonRepository
     {
-        void AddPerson(Person person);
-        bool PersonExists(int identityDocument);
-           
+        void AddPerson(Person person);             
         }
     }
 
